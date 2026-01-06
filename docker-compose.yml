@@ -1,0 +1,31 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: pc-parts-api
+    container_name: pc-parts-app
+    restart: unless-stopped
+    working_dir: /var/www
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/var/www
+    networks:
+      - pc-parts-network
+
+  db:
+    image: mysql:8.0
+    container_name: pc-parts-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: pc_parts
+      MYSQL_ROOT_PASSWORD: Angela123!
+      MYSQL_PASSWORD: Angela123!
+      MYSQL_USER: angela_user
+    networks:
+      - pc-parts-network
+
+networks:
+  pc-parts-network:
+    driver: bridge
